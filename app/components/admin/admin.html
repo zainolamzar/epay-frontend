@@ -1,4 +1,6 @@
 <div>
     <h2>Admin Dashboard</h2>
-    <p>Welcome, Admin!</p>
+    <li ng-repeat="admin in admins">
+        {{ admin.username }} - {{ admin.email }}
+    </li>
 </div>  

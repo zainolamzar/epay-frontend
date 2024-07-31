@@ -1,17 +1,17 @@
 angular.module('myApp')
-  .controller('LoginController', function($scope, $location, AuthService, UserService) {
+  .controller('LoginController', function($scope, $location, AuthService) {
     $scope.login = function() {
-      const user = UserService.getUserByUsername($scope.username);
-      if (user) {
-        AuthService.login(user.role).then(() => {
-          if (user.role === 'Student') {
-            $location.path('/student');
-          } else if (user.role === 'Admin') {
+      AuthService.login($scope.username, $scope.password)
+        .then(function(user) {
+          if (user.isAdmin) {
             $location.path('/admin');
+          } else if (user.isStudent) {
+            $location.path('/student');
+          } else {
+            alert('Unknown user type');
           }
+        }).catch(function(error) {
+          alert('Login failed: ' + (error.data.message || 'Unknown error'));
         });
-      } else {
-        alert('User not found');
-      }
     };
 });

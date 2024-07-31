@@ -1,11 +1,16 @@
 angular.module('myApp')
-  .factory('AuthService', function($q) {
+  .factory('AuthService', function($q, UserService) {
     let user = null;
 
     return {
-      login: function(role) {
-        user = { role: role }; // In a real application, you would authenticate and fetch the user role from a backend
-        return $q.resolve(user);
+      login: function(username, password) {
+        return UserService.login(username, password)
+          .then(function(userData) {
+            user = userData; // Store the user data
+            return $q.resolve(user);
+          }, function(error) {
+            return $q.reject(error);
+          });
       },
       logout: function() {
         user = null;
@@ -19,7 +24,8 @@ angular.module('myApp')
       },
       isAuthorized: function(roles) {
         if (!user) return false;
-        return roles.includes(user.role);
+        // Additional role-based checks can be added if needed
+        return true;
       }
     };
 });

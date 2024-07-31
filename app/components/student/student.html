@@ -1,4 +1,8 @@
 <div>
     <h2>Student Dashboard</h2>
-    <p>Welcome, Student!</p>
+    <ul>
+        <li ng-repeat="student in students">
+          {{ student.full_name }} - {{ student.username }}
+        </li>
+    </ul>
 </div>  
