@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="myApp">
-<head>
-  <meta charset="UTF-8">
-  <title>My AngularJS App</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
-  <link rel="stylesheet" href="styles/styles.css">
-  <link rel="icon" href="../favicon.ico">
-  <script src="app.module.js"></script>
-  <script src="app.js"></script>
-</head>
-<body>
-  <div ng-controller="MainController">
-    <h1>{{ title }}</h1>
-  </div>
-</body>
+  <head>
+    <meta charset="UTF-8">
+    <title>My AngularJS App</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="app.module.js"></script>
+    <script src="app.js"></script>
+    <script src="services/auth.service.js"></script>
+    <script src="services/user.service.js"></script>
+    <script src="components/login/login.controller.js"></script>
+    <script src="components/student/student.controller.js"></script>
+    <script src="components/admin/admin.controller.js"></script>
+  </head>
+  <body>
+    <div ng-view></div>
+  </body>
 </html>
