@@ -1,4 +1,3 @@
-// app/app.module.js
 angular.module('myApp', ['ngRoute'])
   .config(function($routeProvider) {
     $routeProvider
@@ -11,7 +10,9 @@ angular.module('myApp', ['ngRoute'])
         controller: 'StudentController',
         resolve: {
           auth: function(AuthService) {
-            return AuthService.isAuthenticated() && AuthService.isAuthorized(['Student']);
+            return AuthService.checkAuth().then(function() {
+              return AuthService.isAuthorized(['Student']);
+            });
           }
         }
       })
@@ -20,11 +21,20 @@ angular.module('myApp', ['ngRoute'])
         controller: 'AdminController',
         resolve: {
           auth: function(AuthService) {
-            return AuthService.isAuthenticated() && AuthService.isAuthorized(['Admin']);
+            return AuthService.checkAuth().then(function() {
+              return AuthService.isAuthorized(['Admin']);
+            });
           }
         }
       })
       .otherwise({
         redirectTo: '/login'
       });
-});
+  })
+  .run(function($rootScope, $location, AuthService) {
+    $rootScope.$on('$routeChangeError', function(event, current, previous, rejection) {
+      if (rejection === 'Not authenticated') {
+        $location.path('/login');
+      }
+    });
+  });

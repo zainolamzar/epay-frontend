@@ -11,7 +11,7 @@ angular.module('myApp')
             alert('Unknown user type');
           }
         }).catch(function(error) {
-          alert('Login failed: ' + (error.data.message || 'Unknown error'));
+          $scope.errorMessage = 'Login failed: ' + (error.data.message || 'Unknown error');
         });
     };
 });

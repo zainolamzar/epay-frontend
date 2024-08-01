@@ -1,5 +1,5 @@
 angular.module('myApp')
-  .factory('AuthService', function($q, UserService) {
+  .factory('AuthService', function($q, $location, UserService) {
     let user = null;
 
     return {
@@ -26,6 +26,14 @@ angular.module('myApp')
         if (!user) return false;
         // Additional role-based checks can be added if needed
         return true;
+      },
+
+      checkAuth: function() {
+        if (!this.isAuthenticated()) {
+          $location.path('/login');
+          return $q.reject('Not authenticated');
+        }
+        return $q.resolve();
       }
     };
 });
